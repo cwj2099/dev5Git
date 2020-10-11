@@ -8,7 +8,11 @@ using UnityEngine.UIElements;
 
 public class Script_movement : MonoBehaviour
 {
-    public DragonBones.UnityArmatureComponent thisSprite;
+    public Animator ani;
+    public SpriteRenderer spr;
+    public GameObject sword;
+    public Sprite spr_sword1;
+    public Sprite spr_sword2;
     public Rigidbody2D thisRigidbody2d;
     public float force = 10f;
     public float grav_ground = 7;
@@ -21,6 +25,7 @@ public class Script_movement : MonoBehaviour
     public LayerMask theMask;
 
     Vector2 direction;
+    int counter1;
 
 
     // Start is called before the first frame update
@@ -32,13 +37,16 @@ public class Script_movement : MonoBehaviour
     private void Update()
     {
         if (groundScript.grounded){
+            ani.SetBool("onGround", true);
             fly = true;
             if (!(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
             {
-                if (thisSprite.animationName != "idle") { thisSprite.animationName = "idle"; thisSprite.animation.FadeIn("idle", 0.2f, 0); }
+                ani.SetBool("Moving",false);
+
             }
             else {
-                if (thisSprite.animationName != "ground") { thisSprite.animationName = "ground"; thisSprite.animation.FadeIn("ground", 0.2f, 0); }
+                ani.SetBool("Moving", true);
+
             }
             
             thisRigidbody2d.gravityScale = grav_ground;
@@ -48,17 +56,18 @@ public class Script_movement : MonoBehaviour
         }
         else {
             thisRigidbody2d.gravityScale = grav_air;
-            if (thisSprite.animationName != "float") { thisSprite.animationName = "float"; thisSprite.animation.FadeIn("float", 0.2f, 0); }
+            ani.SetBool("onGround", false);
+
             if (Input.GetKeyDown(KeyCode.Space)&&manager.flyable&&fly)
             {
-                thisSprite.animation.Play("float");
+                ani.SetBool("onGround", true);
                 fly = false;
                 thisRigidbody2d.AddForce(Vector2.up * force *1.5f, ForceMode2D.Impulse);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
-            transform.position = tele.transform.position;
+            transform.position = tele.transform.position-new Vector3(0,0,1f);
         }
 
         Vector3 mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -68,42 +77,50 @@ public class Script_movement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(ray1.origin, ray1.direction, attack_length, theMask);
         Debug.DrawRay(ray1.origin, ray1.direction*attack_length , Color.white);
 
-        //DragonBones.AnimationState animationState = thisSprite.animation.FadeIn("default", 0.1f, 1, 0, "ATTACK_ANIMATION_GROUP");
-        //animationState.AddBoneMask("weapon");
-        //print(Vector2.Angle(transform.position, mPos));
-        if (thisSprite.armature.flipX == true)
-        {
-            thisSprite.armature.GetBone("weapon").offset.rotation = 355 - (Mathf.Atan2(direction.x, direction.y));
-        }
-        else {
-            thisSprite.armature.GetBone("weapon").offset.rotation = (Mathf.Atan2(direction.x, direction.y) - 60);
-        }
+
+        sword.transform.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(direction.x,direction.y)*Mathf.Rad2Deg); 
         if (manager.hookable)
         {
             if (Input.GetMouseButtonDown (0))
             {
+                counter1 = 60;
                 //print("attempted flying");
-                //thisRigidbody2d.velocity = Vector2.zero;
-                if (hit.collider!=null&&hit.collider.gameObject.CompareTag("ground"))
+                thisRigidbody2d.velocity = Vector2.zero;//clear force
+                if (hit.collider != null && hit.collider.gameObject.CompareTag("enemy"))
                 {
-                    thisRigidbody2d.AddForce(direction * force * 1.5f, ForceMode2D.Impulse);
+                    //print("hitted");
+                    thisRigidbody2d.AddForce(direction * force * 4f, ForceMode2D.Impulse);
+                }
+                else {
+                    thisRigidbody2d.AddForce(direction * force * 2f, ForceMode2D.Impulse);
                 }
                 //thisRigidbody2d.AddForce(Vector2.up * thisRigidbody2d.gravityScale, ForceMode2D.Impulse);
 
             }
         }
+        if (counter1 > 0) {
+            counter1--;
+            if (counter1 > 1) { thisRigidbody2d.gravityScale = 0; }
+            else if (counter1 == 1) { thisRigidbody2d.velocity = Vector2.zero; }
+            sword.GetComponent<SpriteRenderer>().sprite = spr_sword2;
+        }
+        else { sword.GetComponent<SpriteRenderer>().sprite = spr_sword1; }
+        
     }
 
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.A)) {
             thisRigidbody2d.AddForce(Vector2.left * force * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            thisSprite.armature.flipX = true;
+
+            spr.flipX = true;
+            
         }
         if (Input.GetKey(KeyCode.D))
         {
             thisRigidbody2d.AddForce(Vector2.right * force * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            thisSprite.armature.flipX = false;
+
+            spr.flipX = false;
         }
 
         
