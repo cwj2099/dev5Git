@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Script_manager : MonoBehaviour
 {
+    public Script_movement Player;
+
     public Boolean flyable = false;
     public Boolean hookable = false;
     public int collection = 0;
