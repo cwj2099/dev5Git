@@ -10,10 +10,13 @@ public class Script_manager : MonoBehaviour
 
     public Boolean flyable = false;
     public Boolean hookable = false;
+    public int hooks=1;
     public int collection = 0;
     public int collection2 = 0;
-    public Text score1;
-    public Text score2;
+    public Image health;
+    public Image Sword1;
+    public Image Sword2;
+    public Image Sword3;
     public Text textBox;
     // Start is called before the first frame update
     void Start()
@@ -24,32 +27,21 @@ public class Script_manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        score1.text = ": " + collection;
-        score2.text = ": " + collection2;
-        if (collection == 3)
+        health.rectTransform.sizeDelta = new Vector2(Player.Hp * 40f, 40f);
+        if (collection >= 1) { flyable = true; }
+        if (collection >= 2) { hookable = true; }
+        if(collection >= 3) { hooks = 2; }
+        if (collection >= 4) { hooks = 3; }
+
+        if (!hookable) { Sword1.gameObject.SetActive(false); Sword2.gameObject.SetActive(false); Sword3.gameObject.SetActive(false); }
+        else
         {
-            flyable = true;
-            if (collection2 == 0)
-            {
-                textBox.text = "You can now double jump, kid";
-            }
-        }
-        else if (collection == 4) {
+            if (Player.slashes == 0) { Sword1.gameObject.SetActive(false); Sword2.gameObject.SetActive(false); Sword3.gameObject.SetActive(false); }
+            if (Player.slashes == 1) { Sword1.gameObject.SetActive(true); Sword2.gameObject.SetActive(false); Sword3.gameObject.SetActive(false); }
+            if (Player.slashes == 2) { Sword1.gameObject.SetActive(true); Sword2.gameObject.SetActive(true); Sword3.gameObject.SetActive(false); }
+            if (Player.slashes == 3) { Sword1.gameObject.SetActive(true); Sword2.gameObject.SetActive(true); Sword3.gameObject.SetActive(true); }
 
-            hookable = true;
-            if (collection2 == 0)
-            {
-                textBox.text = "The hook is unlocked, press mouse left button";
-            }
         }
 
-        else if (collection == 5)
-        {
-
-            if (collection2 == 0)
-            {
-                textBox.text = "I sensed the blue on the right side, get there";
-            }
-        }
     }
 }

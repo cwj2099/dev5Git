@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Script_end : MonoBehaviour
 {
     public string content;
+    public Text text;
     public GameObject target;
-    public Script_test text;
     public Script_manager manager;
     // Start is called before the first frame update
     void Start()
@@ -21,10 +23,12 @@ public class Script_end : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        manager.collection2++;
-        collision.transform.position = target.transform.position;
-        text.content = content;
-        Destroy(gameObject);
+        if (collision.gameObject.CompareTag("Player")) {
+            manager.collection2++;
+            text.text = content;
+            collision.gameObject.transform.position = target.transform.position;
+            Destroy(gameObject);
+        }
 
     }
 }

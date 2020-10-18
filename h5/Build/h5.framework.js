@@ -1296,7 +1296,7 @@ function _emscripten_asm_const_ii(code, a0) {
  return ASM_CONSTS[code](a0);
 }
 STATIC_BASE = GLOBAL_BASE;
-STATICTOP = STATIC_BASE + 2407488;
+STATICTOP = STATIC_BASE + 2413696;
 __ATINIT__.push({
  func: (function() {
   __GLOBAL__sub_I_AccessibilityScriptingClasses_cpp();
@@ -3226,7 +3226,7 @@ __ATINIT__.push({
   ___emscripten_environ_constructor();
  })
 });
-var STATIC_BUMP = 2407488;
+var STATIC_BUMP = 2413696;
 Module["STATIC_BASE"] = STATIC_BASE;
 Module["STATIC_BUMP"] = STATIC_BUMP;
 var tempDoublePtr = STATICTOP;
@@ -13305,10 +13305,6 @@ function _localtime_r(time, tmPtr) {
 function _localtime(time) {
  return _localtime_r(time, ___tm_current);
 }
-function _longjmp(env, value) {
- Module["setThrew"](env, value || 1);
- throw "longjmp";
-}
 function _emscripten_memcpy_big(dest, src, num) {
  HEAPU8.set(HEAPU8.subarray(src, src + num), dest);
  return dest;
@@ -15025,8 +15021,8 @@ function nullFunc_vjji(x) {
  err("Build with ASSERTIONS=2 for more info.");
  abort(x);
 }
-Module["wasmTableSize"] = 48766;
-Module["wasmMaxTableSize"] = 48766;
+Module["wasmTableSize"] = 50754;
+Module["wasmMaxTableSize"] = 50754;
 function invoke_dd(index, a1) {
  var sp = stackSave();
  try {
@@ -17952,7 +17948,6 @@ Module.asmLibraryArg = {
  "_llvm_trunc_f32": _llvm_trunc_f32,
  "_localtime": _localtime,
  "_localtime_r": _localtime_r,
- "_longjmp": _longjmp,
  "_mktime": _mktime,
  "_nanosleep": _nanosleep,
  "_pthread_getspecific": _pthread_getspecific,
@@ -21066,12 +21061,6 @@ asm["_realloc"] = (function() {
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return real__realloc.apply(null, arguments);
 });
-var real__saveSetjmp = asm["_saveSetjmp"];
-asm["_saveSetjmp"] = (function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return real__saveSetjmp.apply(null, arguments);
-});
 var real__sbrk = asm["_sbrk"];
 asm["_sbrk"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
@@ -21083,12 +21072,6 @@ asm["_strlen"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return real__strlen.apply(null, arguments);
-});
-var real__testSetjmp = asm["_testSetjmp"];
-asm["_testSetjmp"] = (function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return real__testSetjmp.apply(null, arguments);
 });
 var real_establishStackSpace = asm["establishStackSpace"];
 asm["establishStackSpace"] = (function() {
@@ -23713,11 +23696,6 @@ var _realloc = Module["_realloc"] = (function() {
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["_realloc"].apply(null, arguments);
 });
-var _saveSetjmp = Module["_saveSetjmp"] = (function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["_saveSetjmp"].apply(null, arguments);
-});
 var _sbrk = Module["_sbrk"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
@@ -23727,11 +23705,6 @@ var _strlen = Module["_strlen"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["_strlen"].apply(null, arguments);
-});
-var _testSetjmp = Module["_testSetjmp"] = (function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["_testSetjmp"].apply(null, arguments);
 });
 var establishStackSpace = Module["establishStackSpace"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
