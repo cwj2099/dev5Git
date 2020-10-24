@@ -4928,6 +4928,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5659626835794764650, guid: 2985316d8f11e6a45a0b52ba9a788386, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.059906006
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659626835794764650, guid: 2985316d8f11e6a45a0b52ba9a788386, type: 3}
+      propertyPath: m_Size.x
+      value: 35.613113
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659626835794764650, guid: 2985316d8f11e6a45a0b52ba9a788386, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.019709587
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659626835794764650, guid: 2985316d8f11e6a45a0b52ba9a788386, type: 3}
+      propertyPath: m_Size.y
+      value: 19.970545
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659626835794764651, guid: 2985316d8f11e6a45a0b52ba9a788386, type: 3}
+      propertyPath: orthographic size
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5659626835794764692, guid: 2985316d8f11e6a45a0b52ba9a788386, type: 3}
       propertyPath: m_LocalPosition.x
       value: -61.1
